@@ -7,8 +7,7 @@
     - ansible-role-security
     - ansible-role-git
     - ansible-role-nginx
+    - ansible-role-nodejs
     - ruby
     - mysql
     - suishouji
-    - ansible-role-nodejs
-    #    - memcached

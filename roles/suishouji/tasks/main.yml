@@ -29,6 +29,3 @@
 - name: enable suishouji configuration
   file: src=/etc/nginx/sites-available/suishouji.conf dest=/etc/nginx/sites-enabled/suishouji state=link
   notify: restart nginx
-
-
-- name: enable
