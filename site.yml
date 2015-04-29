@@ -1,0 +1,14 @@
+---
+- name: Config Deployer, Install nginx, ruby, mongoDB
+  hosts: webservers
+  sudo: True
+  roles:
+    - ansible-role-repo-epel
+    - ansible-role-security
+    - ansible-role-git
+    - ansible-role-nginx
+    - ruby
+    - mysql
+    - suishouji
+    - ansible-role-nodejs
+    #    - memcached

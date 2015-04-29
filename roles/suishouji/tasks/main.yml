@@ -1,0 +1,34 @@
+---
+- name: Install nokogiri dependencies
+  yum: name={{ item }}
+  with_items:
+    - libxml2-devel
+    - libxslt-devel
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+- name: add a user deployer
+  user: name=deployer state=present
+
+- name: create log directory for suishouji
+  file: path=/var/log/suishouji/ state=directory owner=deployer mode=0755
+
+- name: create directories deploy suishouji
+  file: path=/var/www state=directory owner=deployer mode=0775
+
+- name: make directory /run can be modified
+  file: path=/run state=directory owner=deployer mode=0775
+
+- name: copy suishouji nginx config file
+  copy: src=suishouji.conf dest=/etc/nginx/sites-available/suishouji.conf
+  notify: restart nginx
+
+- name: remove files from site enable directory
+  shell: rm -f /etc/nginx/sites-enabled/*
+  notify: restart nginx
+
+- name: enable suishouji configuration
+  file: src=/etc/nginx/sites-available/suishouji.conf dest=/etc/nginx/sites-enabled/suishouji state=link
+  notify: restart nginx
+
+
+- name: enable
